@@ -1,0 +1,49 @@
+body {
+    background: #f5f7fb;
+    color: #202938;
+    min-height: 100vh;
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+.stat-card,
+.filter-panel,
+.form-container,
+.empty-state {
+    background: white;
+    border: 1px solid #e2e7ef;
+    border-radius: 12px;
+    padding: 22px;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+.item-card {
+    border: 1px solid #e2e7ef;
+    border-radius: 12px;
+    transition: box-shadow 0.15s ease;
+}
+
+.item-card:hover {
+    box-shadow: 0 4px 16px rgba(20, 35, 60, 0.08);
+}
+
+.form-container {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 48px 20px;
+}
+
+footer {
+    font-size: 0.9rem;
+}

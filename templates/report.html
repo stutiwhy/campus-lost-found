@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Report an Item{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1 class="h3 mb-2">Report an item</h1>
+    <p class="text-muted mb-4">
+        Enter the details so other students can identify the item.
+    </p>
+
+    <form method="POST" action="{{ url_for('report') }}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Item name</label>
+            <input id="name" name="name" class="form-control"
+                   maxlength="100" required
+                   value="{{ request.form.get('name', '') }}"
+                   placeholder="e.g. Black wireless earphones">
+        </div>
+
+        <div class="mb-3">
+            <label for="report_type" class="form-label">Report type</label>
+            <select id="report_type" name="report_type"
+                    class="form-select" required>
+                <option value="">Choose Lost or Found</option>
+                <option value="Lost"
+                    {% if request.form.get('report_type') == 'Lost' %}selected{% endif %}>
+                    I lost this item
+                </option>
+                <option value="Found"
+                    {% if request.form.get('report_type') == 'Found' %}selected{% endif %}>
+                    I found this item
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select id="category" name="category"
+                    class="form-select" required>
+                <option value="">Choose a category</option>
+                {% for category in categories %}
+                    <option value="{{ category }}"
+                        {% if request.form.get('category') == category %}selected{% endif %}>
+                        {{ category }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" name="description"
+                      class="form-control" maxlength="1000"
+                      rows="4" required
+                      placeholder="Colour, brand, identifying details...">{{ request.form.get('description', '') }}</textarea>
+        </div>
+
+        <div class="mb-4">
+            <label for="location" class="form-label">
+                Last seen / found location
+            </label>
+            <input id="location" name="location" class="form-control"
+                   maxlength="150" required
+                   value="{{ request.form.get('location', '') }}"
+                   placeholder="e.g. Library, second floor">
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Submit report
+        </button>
+        <a href="{{ url_for('index') }}"
+           class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

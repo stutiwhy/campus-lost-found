@@ -1,0 +1,34 @@
+# Throw-away test stack: app + real Firefox + the test runner. Nothing is
+# installed on the Jenkins machine except Docker.
+services:
+  app:
+    build:
+      context: .
+      target: runtime
+    environment:
+      SECRET_KEY: ci-only-secret
+
+  selenium:
+    image: selenium/standalone-firefox:4.38.0
+    shm_size: "2gb"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:4444/wd/hub/status"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  tests:
+    build:
+      context: .
+      target: test
+    command: ["python", "-m", "pytest", "-v", "--junitxml=/results/junit.xml"]
+    environment:
+      APP_URL: http://app:5000
+      SELENIUM_REMOTE_URL: http://selenium:4444/wd/hub
+    volumes:
+      - ./test-results:/results
+    depends_on:
+      app:
+        condition: service_healthy
+      selenium:
+        condition: service_healthy

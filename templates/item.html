@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="d-flex gap-2 mb-3">
+        <span class="badge
+            {% if item.report_type == 'Lost' %}text-bg-danger
+            {% else %}text-bg-success{% endif %}">
+            {{ item.report_type }}
+        </span>
+        <span class="badge
+            {% if item.status == 'Open' %}text-bg-primary
+            {% else %}text-bg-secondary{% endif %}">
+            {{ item.status }}
+        </span>
+    </div>
+
+    <h1>{{ item.name }}</h1>
+
+    <p class="text-muted">{{ item.category }}</p>
+
+    <hr>
+
+    <h2 class="h6">Description</h2>
+    <p>{{ item.description }}</p>
+
+    <h2 class="h6">Location</h2>
+    <p>{{ item.location }}</p>
+
+    <h2 class="h6">Report date</h2>
+    <p>{{ item.created_at }}</p>
+
+    {% if item.status == 'Open' %}
+        <form method="POST"
+              action="{{ url_for('resolve_item', item_id=item.id) }}">
+            <button class="btn btn-success" type="submit">
+                Mark resolved
+            </button>
+        </form>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}"
+       class="btn btn-outline-secondary mt-3">
+        Back to reports
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+# Deployment stack. Jenkins runs:  docker compose -p campus-lost-found up -d --build --wait
+services:
+  app:
+    build:
+      context: .
+      target: runtime
+    image: campus-lost-found:latest
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY must be set (see JENKINS_SETUP.md)}
+    volumes:
+      - lost_found_data:/data
+
+volumes:
+  lost_found_data:
+    name: lost_found_data   # same name the old Jenkinsfile used, so existing data is kept
