@@ -44,8 +44,6 @@ def get_db():
 
 def init_db():
     with get_db() as db:
-        # WAL lets several gunicorn workers read while one writes.
-        db.execute("PRAGMA journal_mode = WAL")
         db.execute("""
             CREATE TABLE IF NOT EXISTS items (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -220,8 +218,6 @@ def health():
 def not_found(error):
     return render_template("404.html"), 404
 
-
-init_db()
 
 if __name__ == "__main__":
     app.run(
