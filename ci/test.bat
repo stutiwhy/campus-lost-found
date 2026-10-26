@@ -1,4 +1,5 @@
 @echo off
+set "PATH=%PATH%;C:\Program Files\Docker\Docker\resources\bin"
 setlocal
 if "%BUILD_NUMBER%"=="" set BUILD_NUMBER=local
 set COMPOSE=docker compose -f docker-compose.ci.yml -p lostfound-ci-%BUILD_NUMBER%
