@@ -1,4 +1,5 @@
 @echo off
+set "PATH=%PATH%;C:\Program Files\Docker\Docker\resources\bin"
 setlocal
 
 REM One-time migration: remove the container the old Jenkinsfile created by hand.
