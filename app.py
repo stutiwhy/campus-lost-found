@@ -9,7 +9,7 @@ from flask import (
 
 # jenkins change test
 
-app = Flask(__name__)
+app = Flask(__name__ # jenkins change test fail
 app.secret_key = os.environ.get("SECRET_KEY", "local-development-key")
 
 BASE_DIR = Path(__file__).resolve().parent
